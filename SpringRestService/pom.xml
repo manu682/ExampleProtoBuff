@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.nokia.sample</groupId>
+	<artifactId>spring-rest-service</artifactId>
+	<version>DYNAMIC-SNAPSHOT</version>
+	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.1.RELEASE</version>
+	</parent>
+	
+	<properties>
+		<!-- START : For protocol buffer -->
+		
+		<!-- protobuf paths -->
+		<!-- 
+	    <protobuf.input.directory>${project.basedir}/src/main/proto</protobuf.input.directory>
+	    <protobuf.output.directory>${project.build.directory}/generated-sources</protobuf.output.directory>
+	    <protobuf.version>3.1.0</protobuf.version>
+	    -->
+	    <!-- library versions -->
+	    <!-- 
+	    <os-maven-plugin.version>1.4.1.Final</os-maven-plugin.version>
+	    <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
+	    <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
+	    <maven-shade-plugin.version>2.4.2</maven-shade-plugin.version>
+	    <build-helper-maven-plugin.version>1.9.1</build-helper-maven-plugin.version>
+	     -->
+	    <protoc-jar-maven-plugin-version>3.1.0.5</protoc-jar-maven-plugin-version>
+	    
+		<!-- END : For protocol buffer -->
+	</properties>
+		
+	<dependencies>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- START : For protocol buffer -->
+		<dependency>
+		    <groupId>com.google.protobuf</groupId>
+		    <artifactId>protobuf-java</artifactId>
+		    <version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.protobuf-java-format</groupId>
+			<artifactId>protobuf-java-format</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<!-- END : For protocol buffer -->
+	</dependencies>
+	
+	<build>
+	    <!-- copy protoc binary into build directory -->
+	    <plugins>
+			<plugin>
+			    <groupId>com.github.os72</groupId>
+			    <artifactId>protoc-jar-maven-plugin</artifactId>
+			    <version>3.1.0.5</version>
+			    <executions>
+			        <execution>
+			            <phase>generate-sources</phase>
+			            <goals>
+			                <goal>run</goal>
+			            </goals>
+			            <configuration>
+			                <protocVersion>3.1.0</protocVersion>
+			                <includeStdTypes>true</includeStdTypes>
+			                <addSources>none</addSources>
+			                <outputDirectory>src/main/java</outputDirectory>
+			                <!-- 
+			                <includeDirectories>
+			                    <include>src/main/more_proto_imports</include>
+			                </includeDirectories>
+			                -->
+			                <inputDirectories>
+			                    <include>src/main/protobuf</include>
+			                </inputDirectories>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+	    </plugins>
+	</build>
+		
+	<repositories>
+		<repository>
+			<id>sonatype-forge</id>
+			<url>https://repository.sonatype.org/content/groups/forge/</url>
+		</repository>
+		<repository>
+			<id>edennet-ext-lib</id>
+			<name>edennet-ext-lib</name>
+			<url>http://edendevpi.tre.nsn-rdnet.net:8081/artifactory/edennet-ext-lib</url>
+		</repository>
+		<repository>
+			<id>edendevpi-artifacts</id>
+			<name>edendevpi-artifacts</name>
+			<url>http://edendevpi.tre.nsn-rdnet.net:8081/artifactory/edennet-artifacts</url>
+		</repository>
+	</repositories>
+</project>
