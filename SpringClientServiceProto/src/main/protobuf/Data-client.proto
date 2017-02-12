@@ -1,0 +1,9 @@
+syntax = "proto3";
+option java_package = "com.nokia.sample.model";
+
+message Data {
+  int32 id = 1;						 							//required int32 id = 1 [default = 0]; in proto2
+  string value = 2; //Unique numbered tag 						//optional string value = 2; in proto2
+  string name = 3;
+  string test = 8;
+}
